@@ -1,40 +1,34 @@
-import React, {
-	useContext,
+import {
 	useEffect,
-	useLayoutEffect,
 	useState,
 	useMemo,
 } from "react";
 import UserCard from "../../components/UserCard/UserCard";
+import { userState } from '../../recoil/atoms';
 import { getAllusers } from "../../firebase";
-import { AuthContext } from "../../AuthContext";
 import Loader from "../../components/Loader/Loader";
+import { useRecoilValue } from "recoil";
+import { useLocation } from "react-router-dom";
+import './ListUsers.scss'
 
 export default function ListUsers() {
 	const [loading, setLoading] = useState(true);
 	const [users, setUsers] = useState([]);
-	const { currentUser } = useContext(AuthContext);
+	//const { currentUser } = useContext(AuthContext);
+
+	const user = useRecoilValue(userState);
+    const location = useLocation();
 	const [isAdmin, setIsAdmin] = useState(null);
 	const [subscriptionFilter, setSubscriptionFilter] = useState("All");
 	const [searchQuery, setSearchQuery] = useState("");
 
 	useEffect(() => {
-		if (currentUser !== null) {
-			if (
-				currentUser.email === "kkibetkkoir@gmail.com" ||
-				currentUser.email === "arovanzgamez@gmail.com"
-			) {
-				setIsAdmin(true);
-			} else {
-				setIsAdmin(false);
-				window.history.back();
-			}
-		}
-	}, [currentUser]);
-
-	useLayoutEffect(() => {
-		window.scrollTo(0, 0);
-	});
+        if (user && ['kkibetkkoir@gmail.com', 'charleykibet254@gmail.com', 'coongames8@gmail.com'].includes(user.email)) {
+            setIsAdmin(true);
+        } else {
+            setIsAdmin(false);
+        }
+	}, [user]);
 
 	const [isOnline] = useState(() => {
 		return navigator.onLine;
