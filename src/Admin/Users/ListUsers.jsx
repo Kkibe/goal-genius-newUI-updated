@@ -5,10 +5,10 @@ import React, {
 	useState,
 	useMemo,
 } from "react";
-import UserCard from "../components/UserCard/UserCard";
-import { getAllusers } from "../firebase";
-import { AuthContext } from "../AuthContext";
-import Loader from "../components/Loader/Loader";
+import UserCard from "../../components/UserCard/UserCard";
+import { getAllusers } from "../../firebase";
+import { AuthContext } from "../../AuthContext";
+import Loader from "../../components/Loader/Loader";
 
 export default function ListUsers() {
 	const [loading, setLoading] = useState(true);
